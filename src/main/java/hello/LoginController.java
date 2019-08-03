@@ -3,7 +3,7 @@ import java.sql.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class HelloController {
+public class LoginController {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/USERS?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -13,16 +13,9 @@ public class HelloController {
     Statement stmt = null;
     static String username, password, email;
 
-    @RequestMapping("/signUp")
-    public String signUp(@RequestBody String msg) {
-        if (msg.charAt(msg.length()-1)=='=') msg = msg.replace(msg.substring(msg.length()-1), "");
 
-        String details[] = msg.split("_");
-        if (details!=null && details.length==3) {
-            username = details[0];
-            password = details[1];
-            email = details[2];
-        }
+    @RequestMapping("/signUp")
+    public String signUp(@RequestBody String username, @RequestParam String password, @RequestParam String email) {
 
         try{
 
@@ -76,14 +69,7 @@ public class HelloController {
     }
 
     @RequestMapping("/signIn")
-    public String signIn(@RequestBody String msg) {
-        if (msg.charAt(msg.length()-1)=='=') msg = msg.replace(msg.substring(msg.length()-1), "");
-
-        String details[] = msg.split("_");
-        if (details!=null && details.length==2) {
-            username = details[0];
-            password = details[1];
-        }
+    public String signIn(@RequestParam String username, @RequestParam String password) {
 
         try{
             //STEP 2: Register JDBC driver
@@ -135,9 +121,7 @@ public class HelloController {
     }
 
     @RequestMapping("/getLobbyData")
-    public String getLobbyData(@RequestBody String user) {
-        if (user.charAt(user.length()-1)=='=') user = user.replace(user.substring(user.length()-1), "");
-
+    public String getLobbyData(@RequestParam String user) {
         try{
 
             //STEP 3: Open a connection
