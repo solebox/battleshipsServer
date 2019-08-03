@@ -144,7 +144,7 @@ public class HelloController {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-            //STEP 4: Execute a query (the
+            //STEP 4: Execute a query (this is an example)
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
 
