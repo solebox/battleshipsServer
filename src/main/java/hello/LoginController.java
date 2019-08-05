@@ -1,5 +1,7 @@
 package hello;
 import java.sql.*;
+import java.util.HashMap;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -70,12 +72,12 @@ public class LoginController {
 
     @RequestMapping("/signIn")
     public String signIn(@RequestParam String username, @RequestParam String password) {
-
+        String result = "fail";
         try{
             //STEP 2: Register JDBC driver
             //  Class.forName("com.mysql.jdbc.Driver");
-
             //STEP 3: Open a connection
+
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
@@ -90,7 +92,7 @@ public class LoginController {
             if (!rs.next()) return "user_doesn't_exist";
             else if (!rs.getString("password").equals(password)) return "wrong_password";
             else {
-                String result = "signed_in" + String.valueOf(rs.getInt("score"));
+                 result = "signed_in" + String.valueOf(rs.getInt("score"));
                 return result;
             }
 
@@ -98,9 +100,11 @@ public class LoginController {
 
         }catch(SQLException se){
             //Handle errors for JDBC
+            result = ""+ se;
             se.printStackTrace();
         }catch(Exception e){
             //Handle errors for Class.forName
+            result = ""+ e;
             e.printStackTrace();
         }finally{
             //finally block used to close resources
@@ -117,7 +121,7 @@ public class LoginController {
             }//end finally try
         }//end try
 
-        return "user_exists";
+        return result;
     }
 
     @RequestMapping("/getLobbyData")

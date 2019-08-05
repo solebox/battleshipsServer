@@ -1,13 +1,14 @@
 package hello;
 
+import dto.Board;
 import dto.GameRoom;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GameController {
     @RequestMapping("/game")
-    public String index() {
-        return "An empty game!";
+    public Board index(Board board) {
+        return board;
     }
     @GetMapping(value = "/gameroom/{roomId}")
     public @ResponseBody GameRoom getGameRoom(@PathVariable Integer roomId) {

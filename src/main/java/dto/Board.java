@@ -1,5 +1,8 @@
 package dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Board {
 
     public enum BoardStateEnum {EMPTY,PREPARATION, READY}
@@ -7,6 +10,11 @@ public class Board {
     private Cell[][] cells;
     private int [] ship_desired_length = {3,2,1};
     private int [] ships_current_length = {0,0,0};
+    public static int BOARD_DEFAULT_SIZE = 5;
+
+    public Board(){
+        this(BOARD_DEFAULT_SIZE);
+    }
 
     public Board(int n)
     {
