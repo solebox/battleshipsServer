@@ -1,8 +1,17 @@
 package hello;
 import java.sql.*;
-import java.util.HashMap;
+import java.util.List;
 
+import dto.Player;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.web.bind.annotation.*;
+
+import javax.sql.DataSource;
+import javax.sql.RowSet;
+
 
 @RestController
 public class LoginController {
@@ -14,10 +23,12 @@ public class LoginController {
     Connection conn = null;
     Statement stmt = null;
     static String username, password, email;
+    @Autowired GameDao battleShips;
+    @Autowired PlayerDao players;
 
 
     @RequestMapping("/signUp")
-    public String signUp(@RequestBody String username, @RequestParam String password, @RequestParam String email) {
+    public String signUp(JdbcTemplate jt, @RequestBody String username, @RequestParam String password, @RequestParam String email) {
 
         try{
 
@@ -29,8 +40,10 @@ public class LoginController {
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
             String sql;
+
             sql = "SELECT username FROM Users WHERE username='" + username +"'";
-            ResultSet rs = stmt.executeQuery(sql);
+//            RowSet rs = stmt.executeQuery(sql);
+            RowSet rs = (RowSet) jt.queryForRowSet(sql);
 
             //if user doesn't exist
             if (!rs.next()) {
@@ -74,34 +87,16 @@ public class LoginController {
     public String signIn(@RequestParam String username, @RequestParam String password) {
         String result = "fail";
         try{
-            //STEP 2: Register JDBC driver
-            //  Class.forName("com.mysql.jdbc.Driver");
-            //STEP 3: Open a connection
+            boolean is_logged_in = this.players.isPasswordCorrect(username, password);
 
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "SELECT username, password, score FROM Users WHERE username='" + username +"'";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            //if user doesn't exist
-            if (!rs.next()) return "user_doesn't_exist";
-            else if (!rs.getString("password").equals(password)) return "wrong_password";
+            if (!is_logged_in) return "wrong_password";
             else {
-                 result = "signed_in" + String.valueOf(rs.getInt("score"));
+                 result = "signed_in";
                 return result;
             }
 
             //STEP 6: Clean-up environment
 
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            result = ""+ se;
-            se.printStackTrace();
         }catch(Exception e){
             //Handle errors for Class.forName
             result = ""+ e;

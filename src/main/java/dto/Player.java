@@ -24,6 +24,7 @@ public class Player {
     public int getScore() {
         return score;
     }
+    public void setScore(int score){this.score = score;}
 
     public GameRoom getRoom() {
         return room;
@@ -48,5 +49,7 @@ public class Player {
                 return true;
         return false;
     }
+
+
 
 }
