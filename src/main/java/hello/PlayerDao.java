@@ -41,4 +41,31 @@ public class PlayerDao {
         Integer count = jdbcTemplate.queryForObject("select count(*) from USERS.Users where username = ? and password = ?", new Object[]{username, password}, Integer.class);
         return count > 0;
     }
+
+    public String register(String username, String password, String email){
+        String result = "failed";
+        try{
+
+            Integer count = jdbcTemplate.queryForObject("select count(*) from USERS.Users where username = ?", new Object[]{username}, Integer.class);
+
+            //if user doesn't exist
+            if (count > 0) {
+                result =  "user_exists";
+            }else{
+                //insert to table
+
+                int rows_effected =  jdbcTemplate.update("INSERT INTO USERS.Users VALUES(?,?,?, 0)", username, password, email);
+                result =  "completed";
+
+            }
+
+
+            //STEP 6: Clean-up environment
+        }catch(Exception e){
+            //Handle errors for Class.forName
+            e.printStackTrace();
+
+        }
+        return result;
+    }
 }
