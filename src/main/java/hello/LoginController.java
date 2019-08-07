@@ -61,23 +61,10 @@ public class LoginController {
             //Handle errors for Class.forName
             message = ""+ e;
             e.printStackTrace();
-        }finally{
-            //finally block used to close resources
-            try{
-                if(stmt!=null)
-                    stmt.close();
-            }catch(SQLException se2){
-            }// nothing we can do
-            try{
-                if(conn!=null)
-                    conn.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            }//end finally try
-        }//end try
+        }
         result.put("message", message);
         switch(message) {
-            case "completed":
+            case "signed_in":
                 result.put("success", true);
                 break;
             default:
