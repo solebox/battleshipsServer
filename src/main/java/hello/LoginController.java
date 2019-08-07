@@ -1,5 +1,6 @@
 package hello;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
 
 import dto.Player;
@@ -28,27 +29,37 @@ public class LoginController {
 
 
     @RequestMapping("/signUp")
-    public String signUp(JdbcTemplate jt, @RequestBody String username, @RequestParam String password, @RequestParam String email) {
-        return players.register(username, password, email);
+    public HashMap<String, Object> signUp(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+        HashMap<String, Object> result = new HashMap<>();
+        String message = players.register(username, password, email);
+        result.put("message",message);
+        switch(message) {
+            case "completed":
+                result.put("success", true);
+                break;
+            default:
+               result.put("success", false);
+        }
+        return result;
     }
 
     @RequestMapping("/signIn")
-    public String signIn(@RequestParam String username, @RequestParam String password) {
-        String result = "fail";
+    public HashMap<String, Object> signIn(@RequestParam String username, @RequestParam String password) {
+        HashMap<String, Object> result = new HashMap<>();
+        String message = "failed";
         try{
             boolean is_logged_in = this.players.isPasswordCorrect(username, password);
 
-            if (!is_logged_in) return "wrong_password";
+            if (!is_logged_in) message =  "wrong_password";
             else {
-                 result = "signed_in";
-                return result;
+                 message = "signed_in";
             }
 
             //STEP 6: Clean-up environment
 
         }catch(Exception e){
             //Handle errors for Class.forName
-            result = ""+ e;
+            message = ""+ e;
             e.printStackTrace();
         }finally{
             //finally block used to close resources
@@ -64,7 +75,14 @@ public class LoginController {
                 se.printStackTrace();
             }//end finally try
         }//end try
-
+        result.put("message", message);
+        switch(message) {
+            case "completed":
+                result.put("success", true);
+                break;
+            default:
+                result.put("success", false);
+        }
         return result;
     }
 
