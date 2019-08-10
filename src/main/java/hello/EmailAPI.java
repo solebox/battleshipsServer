@@ -16,8 +16,7 @@ public class EmailAPI {
         Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
         Mail mail = new Mail(from, subject, to, content);
 
-//        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
