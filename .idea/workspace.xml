@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edfcd183-b872-452e-9276-a6d181bede8b" name="Default Changelist" comment="" />
+    <list default="true" id="edfcd183-b872-452e-9276-a6d181bede8b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gs-spring-boot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/gs-spring-boot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dto/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dto/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dto/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dto/GameRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/GameRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dto/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hello/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hello/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hello/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/hello/MyServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/hello/MyServerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Board$BoardStateEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Board$BoardStateEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Cell$StateEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Cell$StateEnum.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Cell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Game$GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Game$GameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/GameRoom$GameRoomState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/GameRoom$GameRoomState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/GameRoom.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/GameRoom.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dto/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/dto/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hello/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hello/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hello/HelloController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/hello/MyServerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/hello/MyServerApplication.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,20 +44,8 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>com.mysql.jdbc.Driver</find>
-      <find>wrong_password</find>
-      <find>signup</find>
-      <find>signin</find>
-      <find>getc</find>
-      <find>subst</find>
-      <find>public gam</find>
-      <find>lobby</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/BattleShipsServer" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -43,12 +57,14 @@
   <component name="ProjectId" id="1OucOXbfkKamx9bIcOMmkFSUNUQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/mysql-connector-java-8.0.17.jar!/" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/battleShipsProj/activation.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="show.inlinked.gradle.project.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -117,113 +133,43 @@
       <option name="presentableId" value="Default" />
       <updated>1563776175745</updated>
     </task>
+    <task id="LOCAL-00001" summary="as you can see this is the change we made, &#10;lets commit and push">
+      <created>1564851688374</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1564851688374</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$/BattleShipsServer" />
     </ignored-roots>
+    <MESSAGE value="as you can see this is the change we made, &#10;lets commit and push" />
+    <option name="LAST_COMMIT_MESSAGE" value="as you can see this is the change we made, &#10;lets commit and push" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hello/GameController.java</url>
-          <line>9</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/hello/GameController.java</url>
-          <line>14</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>gs-spring-boot</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Maven: ch.qos.logback:logback-classic:1.2.3</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="this.board.cells[2]" />
+        <watch expression="this.board.state" />
+        <watch expression="received_board" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
