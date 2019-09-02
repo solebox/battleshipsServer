@@ -1,8 +1,11 @@
 package dto;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Cell {
 
     public enum StateEnum {EMPTY, SHIP_PART, BOMBED, BOMBED_SHIP_PART}
+    @SerializedName("state")
     private StateEnum state;
 
     public Cell(StateEnum state) {
