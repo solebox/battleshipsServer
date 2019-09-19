@@ -18,9 +18,9 @@ public class MyServerApplication {
     public MyServerApplication()
     {
         this.setMyAllRooms(new GameRoom[3]);
-        myAllRooms[0] = new GameRoom("Room0");
-        myAllRooms[1] = new GameRoom("Room1");
-        myAllRooms[2] = new GameRoom("Room2");
+        myAllRooms[0] = new GameRoom("Room 0");
+        myAllRooms[1] = new GameRoom("Room 1");
+        myAllRooms[2] = new GameRoom("Room 2");
 
         //TODO - receive the board state from outside
         myAllRooms[0].getGame().getOpponentBoard().getCells()[0][0].setState(Cell.StateEnum.SHIP_PART);

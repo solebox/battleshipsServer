@@ -5,31 +5,45 @@ import java.util.List;
 
 public class Game {
 
-    public enum GameState{ACTIVE, CREATING ,GAME_OVER}
+    public enum GameState{ACTIVE, CREATING ,GAME_OVER }
+    private String winner;
 
     public final int NUM_PLAYERS = 2;
     private GameState state;
     private ArrayList<Player> players;
-    private int playerTurn;
     private Board board;
     private Board opponent_board;
-    private int place_ships;
+    public String turn;
+    public Boolean winner_knows;
+    public Boolean loser_knows;
 
     public Game()
     {
-        board = new Board(5);
-        opponent_board = new Board(5);
+        board = new Board(5,"myOne");
+        opponent_board = new Board(5, "opponent'sOne");
         state = GameState.CREATING;
         players = new ArrayList<Player>();
-        playerTurn = 0;
-        place_ships = 0;
+        turn = "none";
+        winner = "none";
+        winner_knows = false;
+        loser_knows = false;
     }
 
-    public void setPlacedShips(int num) {
-        this.place_ships = num;
+    public void resetGame() {
+        players.clear();
+        turn = "none";
+        state = GameState.CREATING;
+        board.resetBoard("myOne");
+        opponent_board.resetBoard("opponent'sOne");
+        winner_knows = false;
+        loser_knows = false;
     }
-    public int getPlacedShips() {
-        return place_ships;
+
+    public String getWinner() {
+        return winner;
+    }
+    public void setWinner(String user) {
+        winner = user;
     }
 
     //state getter & setter
@@ -40,6 +54,13 @@ public class Game {
         this.state = state;
     }
 
+    public String getTurn() {
+        return turn;
+    }
+    public void setTurn(String turn) {
+        this.turn = turn;
+    }
+
     //players getter
     public ArrayList<Player> getPlayers() {
         return players;
@@ -47,7 +68,7 @@ public class Game {
 
     //get specific player
     public Player getPlayer(int playerIndex) throws Exception {
-        if ((playerIndex > NUM_PLAYERS) || (playerIndex < 0)) {
+        if ((playerIndex >= NUM_PLAYERS) || (playerIndex < 0)) {
             throw new Exception("Invalid player index: " + playerIndex);
         }
         return players.get(playerIndex);
@@ -60,13 +81,13 @@ public class Game {
         players.add(player);
     }
 
-    //playerTurn getter & setter
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-    public void setNextPlayerTurn () {
-        playerTurn = (playerTurn++)%NUM_PLAYERS;
-    }
+//    //playerTurn getter & setter
+//    public int getPlayerTurn() {
+//        return playerTurn;
+//    }
+//    public void setNextPlayerTurn () {
+//        this.playerTurn = (playerTurn++)%2;
+//    }
 
     //board getter & setter
     public Board getBoard() { return board; }
@@ -75,9 +96,10 @@ public class Game {
     }
 
     //opponent_board getter & setter
-    public Board getOpponentBoard() { return opponent_board; }
+    public Board getOpponentBoard() { return this.opponent_board; }
+
     public void setOpponentBoard(Board board) {
-        this.opponent_board = opponent_board;
+        this.opponent_board = board;
     }
 
 }

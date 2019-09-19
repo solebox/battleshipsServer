@@ -34,6 +34,11 @@ public class Player {
         return connected;
     }
 
+    public Player(String userName){
+        // fixme - do we really want to support this?
+        this.userName = userName;
+    }
+
     public Player(String userName, String password, String email) {
         this.userName = userName;
         this.password = password;

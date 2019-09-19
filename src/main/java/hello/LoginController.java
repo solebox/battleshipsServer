@@ -1,9 +1,11 @@
 package hello;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import dto.Player;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -44,11 +46,13 @@ public class LoginController {
     }
 
     @RequestMapping("/signIn")
-    public HashMap<String, Object> signIn(@RequestParam String username, @RequestParam String password) {
+    public HashMap<String, Object> signIn(@RequestBody HashMap<String, String> requestBody) {
+        String _username = requestBody.get("username");
+        String _password = requestBody.get("password");
         HashMap<String, Object> result = new HashMap<>();
         String message = "failed";
         try{
-            boolean is_logged_in = this.players.isPasswordCorrect(username, password);
+            boolean is_logged_in = this.players.isPasswordCorrect(_username, _password);
 
             if (!is_logged_in) message =  "wrong_password";
             else {
@@ -66,6 +70,7 @@ public class LoginController {
         switch(message) {
             case "signed_in":
                 result.put("success", true);
+                result.put("score", 23);
                 break;
             default:
                 result.put("success", false);
@@ -74,18 +79,20 @@ public class LoginController {
     }
 
     @RequestMapping("/getLobbyData")
-    public String getLobbyData(@RequestParam String user) {
+    public HashMap<String, Object> getLobbyData(@RequestBody HashMap<String, String> requestBody) {
+        String _username = requestBody.get("username");
+        HashMap<String, Object> result = new HashMap<>();
         try{
 
             //STEP 3: Open a connection
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
-            //STEP 4: Execute a query (this is an example)
+            //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
 
-            String sql = "SELECT score FROM Users WHERE username='" + user +"'";
+            String sql = "SELECT score FROM Users WHERE username='" + _username +"'";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
             String score = String.valueOf(rs.getInt("score"));
@@ -93,24 +100,27 @@ public class LoginController {
             sql = "SELECT username, score FROM Users ORDER BY score DESC";
             rs = stmt.executeQuery(sql);
 
-            String[] top_data = new String[6];
-            int i = 0;
-            while(rs.next() && i < 5){
-                top_data[i] = rs.getString("username");
-                top_data[i+1] = String.valueOf(rs.getInt("score"));
-                i+=2;
+            ArrayList<HashMap<String,String>> top_users = new ArrayList<>();
+            while(rs.next()){
+                String username = rs.getString("username");
+                String user_score = String.valueOf(rs.getInt("score"));
+                HashMap<String, String> pair = new HashMap<>();
+                pair.put("username", username);
+                pair.put("score", user_score);
+                top_users.add(pair);
             }
+            result.put("top_users", top_users);
 
-            String[] room_state = new String[3];
-            String[] room_name = new String[3];
-
-            for (i = 0; i < 3; i++) {
-                room_state[i] = MyServerApplication.getInstance().getMyAllRooms()[i].getCurrentState().toString();
-                room_name[i] = MyServerApplication.getInstance().getMyAllRooms()[i].getName();
+            HashMap<String, String> rooms = new HashMap<>();
+            for (int i = 0; i < 3; i++) {
+                String room_state = MyServerApplication.getInstance().getMyAllRooms()[i].getCurrentState().toString();
+                String room_name = MyServerApplication.getInstance().getMyAllRooms()[i].getName();
+                rooms.put(room_name, room_state);
             }
+            result.put("rooms", rooms);
+            result.put("my_score", score);
 
-            String top_data_string = String.join("_", top_data);
-            return score + "_" + room_state[0] + "_" + room_state[1] + "_" + room_state[2] + "_" +room_name[0] + "_" + room_name[1] + "_" + room_name[2] + "_" + top_data_string;
+            return result;
 
             //STEP 6: Clean-up environment
         }catch(SQLException se){

@@ -1,25 +1,22 @@
 package dto;
 
-import java.util.ArrayList;
-
 public class GameRoom {
-
-    public final int MAX_OBSERVERS = 3;
 
     private String name;
     private Game game;
-    private ArrayList<Player> observers;
     private GameRoomState currentState;
-    public enum GameRoomState{EMPTY, NOT_EMPTY, FULL}
-
+    public enum GameRoomState{Empty, Not_empty, Full}
 
     //name getter & setter
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void resetRoom() {
+        currentState = GameRoomState.Empty;
+        game.resetGame();
+        this.game = null;
+        this.game = new Game();
     }
 
     //game getter & setter
@@ -30,31 +27,21 @@ public class GameRoom {
         this.game = game;
     }
 
-    //players getter & setter
-    public ArrayList<Player> getObservers() {
-        return observers;
-    }
-    public void setObservers(ArrayList<Player> players) {
-        this.observers = players;
-    }
-
     //currentState getter & setter
     public GameRoomState getCurrentState() {
         return currentState;
     }
     public void setCurrentState()
     {
-        if (observers.isEmpty() && game.getPlayers().isEmpty()) currentState = GameRoomState.EMPTY;
-        else if (game.getPlayers().size() == 2 && observers.size() == MAX_OBSERVERS) currentState = GameRoomState.FULL;
-        else currentState = GameRoomState.NOT_EMPTY;
+        if (game.getPlayers().isEmpty()) currentState = GameRoomState.Empty;
+        else if (game.getPlayers().size() == 2) currentState = GameRoomState.Full;
+        else currentState = GameRoomState.Not_empty;
     }
-
 
     public GameRoom(String name)
     {
-        this.setName(name);
+        this.name = name;
         this.game = new Game();
-        observers = new ArrayList<Player>();
-        this.setCurrentState();
+        this.currentState = GameRoomState.Empty;
     }
 }
