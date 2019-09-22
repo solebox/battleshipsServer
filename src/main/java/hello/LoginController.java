@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import dto.Player;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -18,14 +17,6 @@ import javax.sql.RowSet;
 
 @RestController
 public class LoginController {
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/USERS?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    static final String USER = "oren";
-    static final String PASS = "1234";
-    Connection conn = null;
-    Statement stmt = null;
-    static String username, password, email;
     @Autowired GameDao battleShips;
     @Autowired PlayerDao players;
 
@@ -84,31 +75,10 @@ public class LoginController {
         HashMap<String, Object> result = new HashMap<>();
         try{
 
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            String score = String.valueOf(this.players.getScore(_username));
 
-            //STEP 4: Execute a query
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
+            ArrayList<HashMap<String,String>> top_users = this.players.getTopUsers();
 
-            String sql = "SELECT score FROM Users WHERE username='" + _username +"'";
-            ResultSet rs = stmt.executeQuery(sql);
-            rs.next();
-            String score = String.valueOf(rs.getInt("score"));
-
-            sql = "SELECT username, score FROM Users ORDER BY score DESC";
-            rs = stmt.executeQuery(sql);
-
-            ArrayList<HashMap<String,String>> top_users = new ArrayList<>();
-            while(rs.next()){
-                String username = rs.getString("username");
-                String user_score = String.valueOf(rs.getInt("score"));
-                HashMap<String, String> pair = new HashMap<>();
-                pair.put("username", username);
-                pair.put("score", user_score);
-                top_users.add(pair);
-            }
             result.put("top_users", top_users);
 
             HashMap<String, String> rooms = new HashMap<>();
@@ -122,28 +92,12 @@ public class LoginController {
 
             return result;
 
-            //STEP 6: Clean-up environment
-        }catch(SQLException se){
-            //Handle errors for JDBC
-            se.printStackTrace();
         }catch(Exception e){
             //Handle errors for Class.forName
             e.printStackTrace();
-        }finally{
-            //finally block used to close resources
-            try{
-                if(stmt!=null)
-                    stmt.close();
-            }catch(SQLException se2){
-            }// nothing we can do
-            try{
-                if(conn!=null)
-                    conn.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            }//end finally try
-        }//end try
-
+        } catch (PlayerDao.PlayerDataException e) {
+            e.printStackTrace();
+        }
         return null;
     }
     

@@ -11,11 +11,13 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
 public class PlayerDao {
     private JdbcTemplate jdbcTemplate;
+    private int DEFAULT_TOP_USER_COUNT = 3;
 
     @Autowired
     public PlayerDao(DataSource dataSource) {
@@ -40,6 +42,17 @@ public class PlayerDao {
     public boolean isPasswordCorrect(String username, String password){
         Integer count = jdbcTemplate.queryForObject("select count(*) from USERS.Users where username = ? and password = ?", new Object[]{username, password}, Integer.class);
         return count > 0;
+    }
+
+    public Integer getScore(String username) throws PlayerDataException {
+        Integer score;
+            try {
+                score = jdbcTemplate.queryForObject("SELECT score FROM USERS.Users WHERE username = ?", new Object[]{username}, Integer.class);
+            } catch(Exception e) {
+                   throw new PlayerDataException("cant get player score: " + e.getMessage());
+            }
+
+        return score;
     }
 
     public String register(String username, String password, String email){
@@ -67,5 +80,32 @@ public class PlayerDao {
 
         }
         return result;
+    }
+    public ArrayList<HashMap<String, String>> getTopUsers(){
+        return getTopUsers(DEFAULT_TOP_USER_COUNT);
+    }
+    public ArrayList<HashMap<String,String>> getTopUsers(int count) {
+
+        List<HashMap<String, String>> top_users = new ArrayList<>();
+        top_users = this.jdbcTemplate.query("SELECT username, score FROM Users ORDER BY score DESC limit ?", new Object[]{count}, new RowMapper() {
+            public HashMap<String, String> mapRow(ResultSet rs, int rowNum) throws SQLException {
+                HashMap<String, String> player = new HashMap<>();
+                player.put("username", rs.getString("username"));
+                player.put("score", rs.getString("score"));
+                return player;
+            }
+        });
+        return (ArrayList<HashMap<String,String>>) top_users;
+    }
+
+    public class PlayerDataException extends Throwable {
+        private String message;
+        public PlayerDataException(String message) {
+            this.message = message;
+        }
+        @Override
+        public String getMessage() {
+            return message;
+        }
     }
 }
