@@ -22,7 +22,10 @@ public class LoginController {
 
 
     @RequestMapping("/signUp")
-    public HashMap<String, Object> signUp(@RequestParam String username, @RequestParam String password, @RequestParam String email) {
+    public HashMap<String, Object> signUp(@RequestBody HashMap<String, String> requestBody) {
+        String username = requestBody.get("username");
+        String password = requestBody.get("password");
+        String email = requestBody.get("email");
         HashMap<String, Object> result = new HashMap<>();
         String message = players.register(username, password, email);
         result.put("message",message);
