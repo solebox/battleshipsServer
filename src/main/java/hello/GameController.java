@@ -123,9 +123,9 @@ public class GameController {
     }
 
     @RequestMapping("/checkStatus")
-    public String checkStatus(@RequestBody String mesge) throws Exception {
-        if (mesge.charAt(mesge.length()-1)=='=') mesge = mesge.replace(mesge.substring(mesge.length()-1), "");
-        String msg[] = mesge.split("_");
+    public String checkStatus(@RequestBody String message) throws Exception {
+        if (message.charAt(message.length()-1)=='=') message = message.replace(message.substring(message.length()-1), "");
+        String msg[] = message.split("_");
         if (msg!=null && msg.length==2) {
             username = msg[0];
             room = Integer.valueOf(msg[1]);

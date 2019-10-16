@@ -9,7 +9,7 @@ public class Board {
     private String boardSender;
     private int boardRoom;
     private int size;
-    private static int DEFAULT_BOARD_SIZE = 15;
+    private static int DEFAULT_BOARD_SIZE = 5;
     private static String DEFAUT_BOARD_OWNER = "opponent'sOne";
     public enum BoardStateEnum {EMPTY, PREPARATION, READY, NO_MORE_SHIPS}
     private BoardStateEnum state;
