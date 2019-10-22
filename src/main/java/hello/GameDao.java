@@ -21,7 +21,7 @@ public class GameDao {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public boolean updateScore(String username){
+    public boolean incrementScore(String username){
         String sql;
         sql = "UPDATE Users SET score=score+50 WHERE username=?";
         boolean success = false;

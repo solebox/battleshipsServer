@@ -1,8 +1,6 @@
 package hello;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.concurrent.TimeUnit;
 
 //import com.google.gson.Gson;
 import dto.Board;
@@ -82,7 +80,7 @@ public class GameController {
             MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setState(Game.GameState.GAME_OVER);
             MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setWinner(sender);
 
-            battleShips.updateScore(sender);
+            battleShips.incrementScore(sender);
 
         }
         else if (!owner.equals(sender)) MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setTurn(owner);
