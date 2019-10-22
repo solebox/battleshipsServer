@@ -2,6 +2,7 @@ package hello;
 import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Map;
 
 //import com.google.gson.Gson;
 import dto.Board;
@@ -62,8 +63,8 @@ public class GameController {
     }
 
     @RequestMapping("/sendBoard")
-    public String sendBoard(@RequestBody Board received_board) throws UnsupportedEncodingException, InterruptedException {
-
+    public Map<String, String> sendBoard(@RequestBody Board received_board) throws UnsupportedEncodingException, InterruptedException {
+        HashMap<String, String> result = new HashMap<>();
         int room = received_board.getBoardRoom();
         String owner = received_board.getBoardOwner();
         String sender = received_board.getBoardSender();
@@ -85,7 +86,8 @@ public class GameController {
 
         }
         else if (!owner.equals(sender)) MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setTurn(owner);
-        return "updated";
+        result.put("message", "updated");
+        return result;
     }
 
     @RequestMapping("/checkStatus")
