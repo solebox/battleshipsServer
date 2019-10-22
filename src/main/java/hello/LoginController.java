@@ -17,7 +17,7 @@ import javax.sql.RowSet;
 
 @RestController
 public class LoginController {
-    @Autowired GameDao battleShips;
+
     @Autowired PlayerDao players;
 
 
@@ -69,6 +69,7 @@ public class LoginController {
             default:
                 result.put("success", false);
         }
+        
         return result;
     }
 

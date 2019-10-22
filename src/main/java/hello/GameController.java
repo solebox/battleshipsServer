@@ -9,22 +9,21 @@ import dto.Board;
 import dto.Game;
 import dto.GameRoom;
 import dto.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import static java.net.URLDecoder.decode;
 
 @RestController
 public class GameController {
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/USERS?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-    static final String USER = "oren";
-    static final String PASS = "1234";
     Connection conn = null;
     Statement stmt = null;
     static int room;
     static String username, password, email;
     static String requestedBoard;
+
+    @Autowired
+    GameDao battleShips;
 
     @RequestMapping("/game")
     public Board index(Board board) {
@@ -83,39 +82,7 @@ public class GameController {
             MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setState(Game.GameState.GAME_OVER);
             MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setWinner(sender);
 
-            try{
-                //STEP 3: Open a connection
-                System.out.println("Connecting to database...");
-                conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
-                //STEP 4: Execute a query
-                System.out.println("Creating statement...");
-                stmt = conn.createStatement();
-                String sql;
-                sql = "UPDATE Users SET score=score+50 WHERE username='" + sender +"';";
-                stmt.executeUpdate(sql);
-
-                //STEP 6: Clean-up environment
-            }catch(SQLException se){
-                //Handle errors for JDBC
-                se.printStackTrace();
-            }catch(Exception e){
-                //Handle errors for Class.forName
-                e.printStackTrace();
-            }finally{
-                //finally block used to close resources
-                try{
-                    if(stmt!=null)
-                        stmt.close();
-                }catch(SQLException se2){
-                }// nothing we can do
-                try{
-                    if(conn!=null)
-                        conn.close();
-                }catch(SQLException se){
-                    se.printStackTrace();
-                }//end finally try
-            }//end try
+            battleShips.updateScore(sender);
 
         }
         else if (!owner.equals(sender)) MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setTurn(owner);
@@ -165,7 +132,7 @@ public class GameController {
         }
 //        if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getState().equals(Game.GameState.GAME_OVER)) {
 //            String name = MyServerApplication.getInstance().getMyAllRooms()[room].getName();
-//            MyServerApplication.getInstance().getMyAllRooms()[room] = new GameRoom(name);
+//            MyServerApplication.getInstance().getMyAllRooms()[room] = new GameRoom(name);asdasd
 //        }
         if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getTurn().equals("none")) MyServerApplication.getInstance().getMyAllRooms()[room].getGame().setTurn(username);
 

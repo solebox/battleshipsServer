@@ -20,16 +20,18 @@ public class GameDao {
     public GameDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-    public List<Game> getSoldier(){
-        List<Game> list = new ArrayList<Game>();
-        list = this.jdbcTemplate.query("select name, age from soldier", new RowMapper() {
-            public Game mapRow(ResultSet rs, int rowNum) throws SQLException {
-                Game game = new Game();
-                game.setState(Game.GameState.ACTIVE);
-                return game;
-            }
-        });
-        return list;
+
+    public boolean updateScore(String username){
+        String sql;
+        sql = "UPDATE Users SET score=score+50 WHERE username=?";
+        boolean success = false;
+        try{
+                int rows_effected =  jdbcTemplate.update(sql, username);
+                success =  true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return success;
     }
 
     public JdbcTemplate getTemplate(){
