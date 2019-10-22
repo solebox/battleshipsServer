@@ -1,6 +1,7 @@
 package hello;
 import java.io.UnsupportedEncodingException;
 import java.sql.*;
+import java.util.HashMap;
 
 //import com.google.gson.Gson;
 import dto.Board;
@@ -88,34 +89,47 @@ public class GameController {
     }
 
     @RequestMapping("/checkStatus")
-    public String checkStatus(@RequestBody String message) throws Exception {
-        if (message.charAt(message.length()-1)=='=') message = message.replace(message.substring(message.length()-1), "");
-        String msg[] = message.split("_");
-        if (msg!=null && msg.length==2) {
-            username = msg[0];
-            room = Integer.valueOf(msg[1]);
-        }
+    public HashMap<String, String> checkStatus(@RequestBody HashMap<String, String> username_room) throws Exception {
+        HashMap<String, String> result = new HashMap<>();
+
+        username = username_room.get("username");
+        room = Integer.valueOf(username_room.get("room_number"));
+
 
         //only one player --> waiting for sec player
-        if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getPlayers().size() == 1) return "No 2nd player";
+        if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getPlayers().size() == 1){
+            result.put("message",  "No 2nd player");
+            return result;
+        }
 
         //one board isn't ready --> waiting for sec player's board
-        if (!MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getOpponentBoard().getState().equals(Board.BoardStateEnum.READY) || !MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getBoard().getState().equals(Board.BoardStateEnum.READY)) return "waiting for player2's board";
+        if (!MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getOpponentBoard().getState().equals(Board.BoardStateEnum.READY) || !MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getBoard().getState().equals(Board.BoardStateEnum.READY)){
+            result.put("message",  "waiting for player2's board");
+            return result;
+        }
 
         if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getState().equals(Game.GameState.GAME_OVER)) {
             if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getWinner().equals(username)) {
                 MyServerApplication.getInstance().getMyAllRooms()[room].getGame().winner_knows = true;
                 if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().loser_knows) MyServerApplication.getInstance().getMyAllRooms()[room].resetRoom();
-                return "You win!";
+                result.put("message",  "You win!");
+                return result;
             }
             else if (!MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getWinner().equals("none")) {
                 MyServerApplication.getInstance().getMyAllRooms()[room].getGame().loser_knows = true;
                 if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().winner_knows) MyServerApplication.getInstance().getMyAllRooms()[room].resetRoom();
-                return "Player2 wins!";
+                result.put("message", "Player2 wins!");
+                return result;
             }
         }
-        if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getTurn().equals(username)) return "YourTurn";
-        else return "OpTurn";
+        if (MyServerApplication.getInstance().getMyAllRooms()[room].getGame().getTurn().equals(username)){
+            result.put("message", "YourTurn");
+            return result;
+        }
+        else {
+            result.put("message", "OpTurn");
+            return result;
+        }
     }
 
 
